@@ -10,21 +10,16 @@
 
 <div class="example-wrapper">
     <h1>{{location.city}}, {{location.country}}</h1>
-    {{ "[ %s, %s]"|format(location.latitude, location.longitude) }}
+    {{ "Coordinates: [ %s, %s]"|format(location.latitude, location.longitude) }}
 
-    <ul>
+
+    {# <h1>{{weatherData.temperature}}</h1> #}
+
+    {# <ul>
         {% for data in weatherData %}
             <li>{{ data.temperature }}&deg;C</li>
         {% endfor %}
-    </ul>
-
-    {# <h1>Hello {{ location.city, location.country }}</h1> #}
-
-    {# <ul>
-    {% for data in weatherData %}
-    <li>{{ data.date|date('d.m.Y') }}: {{ data.celsius }}&deg;C</li>
-    {% endfor %}
- </ul> #}
+    </ul> #}
 
     This friendly message is coming from:
     <ul>
