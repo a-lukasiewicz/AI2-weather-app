@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\WeatherData;
 use App\Entity\Location;
+use App\Entity\WeatherData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,6 +21,16 @@ class WeatherDataRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, WeatherData::class);
     }
+
+    public function findByLocation(Location $location)
+    {
+        return $this->createQueryBuilder('weather')
+            ->where('m.location = :location')
+            ->setParameter('location', $location)
+            ->andWhere('m.date > :now')
+            ->setParameter('now', date('Y-m-d'));
+    }
+
 
     public function save(WeatherData $entity, bool $flush = false): void
     {
@@ -43,15 +53,17 @@ class WeatherDataRepository extends ServiceEntityRepository
     //    /**
     //     * @return WeatherData[] Returns an array of WeatherData objects
     //     */
-    public function findByExampleField(Location $location): array
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.location = :location')
-            ->setParameter('location', $location)
-            ->orderBy('w.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('w')
+    //            ->andWhere('w.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('w.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
     //    public function findOneBySomeField($value): ?WeatherData
     //    {

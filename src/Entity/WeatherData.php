@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WeatherDataRepository;
-use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WeatherDataRepository::class)]
@@ -14,62 +15,71 @@ class WeatherData
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Location $location = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+
+    #[ORM\OneToMany(mappedBy: 'weatherData', targetEntity: Location::class)]
+    private Collection $location;
 
     #[ORM\Column(nullable: true)]
-    private ?int $temperature_celsius = null;
+    private ?int $temperature = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $humidity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $weather_conditions = null;
+    private ?string $conditions = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $wind = null;
+    private ?int $windVelocity = null;
+
+    public function __construct()
+    {
+        $this->location = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLocation(): ?Location
+    /**
+     * @return Collection<int, Location>
+     */
+    public function getLocation(): Collection
     {
         return $this->location;
     }
 
-    public function setLocation(?Location $location): self
+    public function addLocation(Location $location): self
     {
-        $this->location = $location;
+        if (!$this->location->contains($location)) {
+            $this->location->add($location);
+            $location->setWeatherData($this);
+        }
 
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function removeLocation(Location $location): self
     {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
+        if ($this->location->removeElement($location)) {
+            // set the owning side to null (unless already changed)
+            if ($location->getWeatherData() === $this) {
+                $location->setWeatherData(null);
+            }
+        }
 
         return $this;
     }
 
-    public function getTemperatureCelsius(): ?int
+    public function getTemperature(): ?int
     {
-        return $this->temperature_celsius;
+        return $this->temperature;
     }
 
-    public function setTemperatureCelsius(?int $temperature_celsius): self
+    public function setTemperature(?int $temperature): self
     {
-        $this->temperature_celsius = $temperature_celsius;
+        $this->temperature = $temperature;
 
         return $this;
     }
@@ -86,26 +96,26 @@ class WeatherData
         return $this;
     }
 
-    public function getWeatherConditions(): ?string
+    public function getConditions(): ?string
     {
-        return $this->weather_conditions;
+        return $this->conditions;
     }
 
-    public function setWeatherConditions(?string $weather_conditions): self
+    public function setConditions(?string $conditions): self
     {
-        $this->weather_conditions = $weather_conditions;
+        $this->conditions = $conditions;
 
         return $this;
     }
 
-    public function getWind(): ?int
+    public function getWindVelocity(): ?int
     {
-        return $this->wind;
+        return $this->windVelocity;
     }
 
-    public function setWind(?int $wind): self
+    public function setWindVelocity(?int $windVelocity): self
     {
-        $this->wind = $wind;
+        $this->windVelocity = $windVelocity;
 
         return $this;
     }

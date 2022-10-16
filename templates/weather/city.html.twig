@@ -9,13 +9,22 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ location.city, location.country }}! ✅</h1>
+    <h1>{{location.city}}, {{location.country}}</h1>
+    {{ "[ %s, %s]"|format(location.latitude, location.longitude) }}
 
     <ul>
-    {% for measurement in measurements %}
-    <li>{{ weatherData.date|date('d.m.Y') }}: {{ weatherData.celsius }}&deg;C</li>
+        {% for data in weatherData %}
+            <li>{{ data.temperature }}&deg;C</li>
+        {% endfor %}
+    </ul>
+
+    {# <h1>Hello {{ location.city, location.country }}</h1> #}
+
+    {# <ul>
+    {% for data in weatherData %}
+    <li>{{ data.date|date('d.m.Y') }}: {{ data.celsius }}&deg;C</li>
     {% endfor %}
- </ul>
+ </ul> #}
 
     This friendly message is coming from:
     <ul>

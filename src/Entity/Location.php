@@ -28,6 +28,9 @@ class Location
     #[ORM\Column(length: 255)]
     private ?string $ID_LOCALIZATION = null;
 
+    #[ORM\ManyToOne(inversedBy: 'location')]
+    private ?WeatherData $weatherData = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,30 @@ class Location
     public function setIDLOCALIZATION(string $ID_LOCALIZATION): self
     {
         $this->ID_LOCALIZATION = $ID_LOCALIZATION;
+
+        return $this;
+    }
+
+    public function getHumidity(): ?WeatherData
+    {
+        return $this->humidity;
+    }
+
+    public function setHumidity(?WeatherData $humidity): self
+    {
+        $this->humidity = $humidity;
+
+        return $this;
+    }
+
+    public function getWeatherData(): ?WeatherData
+    {
+        return $this->weatherData;
+    }
+
+    public function setWeatherData(?WeatherData $weatherData): self
+    {
+        $this->weatherData = $weatherData;
 
         return $this;
     }
