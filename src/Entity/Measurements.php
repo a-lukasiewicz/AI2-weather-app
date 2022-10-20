@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\WeatherDataRepository;
+use App\Repository\MeasurementsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: WeatherDataRepository::class)]
-class WeatherData
+#[ORM\Entity(repositoryClass: MeasurementsRepository::class)]
+class Measurements
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,7 +17,7 @@ class WeatherData
 
 
 
-    #[ORM\OneToMany(mappedBy: 'weatherData', targetEntity: Location::class)]
+    #[ORM\OneToMany(mappedBy: 'Measurements', targetEntity: Location::class)]
     private Collection $location;
 
     #[ORM\Column(nullable: true)]
@@ -54,7 +54,7 @@ class WeatherData
     {
         if (!$this->location->contains($location)) {
             $this->location->add($location);
-            $location->setWeatherData($this);
+            $location->setMeasurements($this);
         }
 
         return $this;
@@ -64,8 +64,8 @@ class WeatherData
     {
         if ($this->location->removeElement($location)) {
             // set the owning side to null (unless already changed)
-            if ($location->getWeatherData() === $this) {
-                $location->setWeatherData(null);
+            if ($location->getMeasurements() === $this) {
+                $location->setMeasurements(null);
             }
         }
 
@@ -118,5 +118,10 @@ class WeatherData
         $this->windVelocity = $windVelocity;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return strval($this->id);
     }
 }

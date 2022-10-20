@@ -3,23 +3,23 @@
 namespace App\Repository;
 
 use App\Entity\Location;
-use App\Entity\WeatherData;
+use App\Entity\Measurements;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<WeatherData>
+ * @extends ServiceEntityRepository<Measurements>
  *
- * @method WeatherData|null find($id, $lockMode = null, $lockVersion = null)
- * @method WeatherData|null findOneBy(array $criteria, array $orderBy = null)
- * @method WeatherData[]    findAll()
- * @method WeatherData[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Measurements|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Measurements|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Measurements[]    findAll()
+ * @method Measurements[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WeatherDataRepository extends ServiceEntityRepository
+class MeasurementsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, WeatherData::class);
+        parent::__construct($registry, Measurements::class);
     }
 
     public function findByLocation(Location $location)
@@ -32,7 +32,7 @@ class WeatherDataRepository extends ServiceEntityRepository
     }
 
 
-    public function save(WeatherData $entity, bool $flush = false): void
+    public function save(Measurements $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -41,7 +41,7 @@ class WeatherDataRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(WeatherData $entity, bool $flush = false): void
+    public function remove(Measurements $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -51,7 +51,7 @@ class WeatherDataRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return WeatherData[] Returns an array of WeatherData objects
+    //     * @return Measurements[] Returns an array of Measurements objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -65,7 +65,7 @@ class WeatherDataRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?WeatherData
+    //    public function findOneBySomeField($value): ?Measurements
     //    {
     //        return $this->createQueryBuilder('w')
     //            ->andWhere('w.exampleField = :val')
