@@ -1,13 +1,12 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-weather_in_city: #weather_at_location
+weather_in_city:
   path: /weather/{city}
   controller: App\Controller\WeatherController:cityAction
   requirements:
     city: \d+
 
-
+app_logout:
+  path: /logout
+  methods: GET
 # weather_by_country_and_city:
 #   path: /weather/{country}/{city}
 #   controller: App\Controller\WeatherController::weatherByCountryAndCity

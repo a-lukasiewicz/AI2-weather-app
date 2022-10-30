@@ -9,11 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/measurements')]
 class MeasurementsController extends AbstractController
 {
     #[Route('/', name: 'app_measurements_index', methods: ['GET'])]
+    #[IsGranted('ROLE_MEASUREMENT')]
     public function index(MeasurementsRepository $measurementsRepository): Response
     {
         return $this->render('measurements/index.html.twig', [
@@ -22,6 +24,7 @@ class MeasurementsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_measurements_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MEASUREMENT_CREATE')]
     public function new(Request $request, MeasurementsRepository $measurementsRepository): Response
     {
         $measurement = new Measurements();
@@ -41,6 +44,7 @@ class MeasurementsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_measurements_show', methods: ['GET'])]
+    #[IsGranted('ROLE_MEASUREMENT_SHOW')]
     public function show(Measurements $measurement): Response
     {
         return $this->render('measurements/show.html.twig', [
@@ -49,6 +53,7 @@ class MeasurementsController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_measurements_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MEASUREMENT_EDIT')]
     public function edit(Request $request, Measurements $measurement, MeasurementsRepository $measurementsRepository): Response
     {
         $form = $this->createForm(MeasurementsType::class, $measurement);
@@ -67,6 +72,7 @@ class MeasurementsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_measurements_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_MEASUREMENT_DELETE')]
     public function delete(Request $request, Measurements $measurement, MeasurementsRepository $measurementsRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $measurement->getId(), $request->request->get('_token'))) {
