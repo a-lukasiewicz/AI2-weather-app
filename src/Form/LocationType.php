@@ -16,7 +16,6 @@ class LocationType extends AbstractType
             ->add('longitude')
             ->add('city')
             ->add('country')
-            ->add('ID_LOCALIZATION')
             ->add('Measurements');
     }
 
