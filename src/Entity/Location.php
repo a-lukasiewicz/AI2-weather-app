@@ -25,9 +25,6 @@ class Location
     #[ORM\Column(length: 255)]
     private ?string $country = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $ID_LOCALIZATION = null;
-
     #[ORM\ManyToOne(inversedBy: 'location')]
     private ?Measurements $Measurements = null;
 
@@ -80,18 +77,6 @@ class Location
     public function setCountry(string $country): self
     {
         $this->country = $country;
-
-        return $this;
-    }
-
-    public function getIDLOCALIZATION(): ?string
-    {
-        return $this->ID_LOCALIZATION;
-    }
-
-    public function setIDLOCALIZATION(string $ID_LOCALIZATION): self
-    {
-        $this->ID_LOCALIZATION = $ID_LOCALIZATION;
 
         return $this;
     }

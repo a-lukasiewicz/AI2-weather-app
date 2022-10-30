@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Measurements;
-use App\Form\Measurements1Type;
+use App\Form\MeasurementsType;
 use App\Repository\MeasurementsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class MeasurementsController extends AbstractController
     public function new(Request $request, MeasurementsRepository $measurementsRepository): Response
     {
         $measurement = new Measurements();
-        $form = $this->createForm(Measurements1Type::class, $measurement);
+        $form = $this->createForm(MeasurementsType::class, $measurement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ class MeasurementsController extends AbstractController
     #[Route('/{id}/edit', name: 'app_measurements_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Measurements $measurement, MeasurementsRepository $measurementsRepository): Response
     {
-        $form = $this->createForm(Measurements1Type::class, $measurement);
+        $form = $this->createForm(MeasurementsType::class, $measurement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,7 +69,7 @@ class MeasurementsController extends AbstractController
     #[Route('/{id}', name: 'app_measurements_delete', methods: ['POST'])]
     public function delete(Request $request, Measurements $measurement, MeasurementsRepository $measurementsRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$measurement->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $measurement->getId(), $request->request->get('_token'))) {
             $measurementsRepository->remove($measurement, true);
         }
 
