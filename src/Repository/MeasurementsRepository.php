@@ -22,13 +22,12 @@ class MeasurementsRepository extends ServiceEntityRepository
         parent::__construct($registry, Measurements::class);
     }
 
-    public function findByLocation(Location $location)
+    public function findByLocation($location)
     {
-        return $this->createQueryBuilder('weather')
-            ->where('m.location = :location')
-            ->setParameter('location', $location)
-            ->andWhere('m.date > :now')
-            ->setParameter('now', date('Y-m-d'));
+        $var = $this->createQueryBuilder('weather');
+        $var->where('weather.id = :location')
+            ->setParameter('location', $location);
+        return $var->getQuery()->getResult();
     }
 
 
@@ -49,29 +48,4 @@ class MeasurementsRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    //    /**
-    //     * @return Measurements[] Returns an array of Measurements objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('w')
-    //            ->andWhere('w.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('w.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Measurements
-    //    {
-    //        return $this->createQueryBuilder('w')
-    //            ->andWhere('w.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }
