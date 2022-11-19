@@ -1,0 +1,19 @@
+{
+    "location": {
+
+        "city": {{ city }},
+        "country": {{ country }}
+
+    },
+    "measurements": [
+        {% for weather in weathers -%}
+        {
+            "celsius": {{ weather.temperature }},
+            "humidity":{{ weather.humidity }} ,
+            "conditions":{{ weather.conditions }} ,
+            "fahrenheit":{{ weather.fahrenheit }} ,
+        }
+        {%- if not loop.last %},{% endif %}
+        {%- endfor %}
+    ]
+}

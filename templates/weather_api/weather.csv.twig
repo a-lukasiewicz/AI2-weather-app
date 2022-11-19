@@ -1,0 +1,9 @@
+city,country,celsius,humidity,conditions,fahrenheit <br />
+{% for weather in weathers %}
+{{ city }},
+{{- country }},
+{{- weather.temperature }},
+{{- weather.humidity }},
+{{- weather.conditions }},
+{{- weather.fahrenheit }},
+{% endfor %}

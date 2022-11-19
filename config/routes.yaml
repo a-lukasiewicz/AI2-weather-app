@@ -10,3 +10,7 @@ app_logout:
 # weather_by_country_and_city:
 #   path: /weather/{country}/{city}
 #   controller: App\Controller\WeatherController::weatherByCountryAndCity
+
+weather_api:
+  path: /weather/api/{type}/{country}/{city}
+  controller: App\Controller\WeatherApiController:weatherTwigAction

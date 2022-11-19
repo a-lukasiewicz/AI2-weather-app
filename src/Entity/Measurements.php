@@ -32,6 +32,9 @@ class Measurements
     #[ORM\Column(nullable: true)]
     private ?int $windVelocity = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $fahrenheit = null;
+
     // public function __construct()
     // {
     //     $this->location = new ArrayCollection();
@@ -99,6 +102,11 @@ class Measurements
         $this->windVelocity = $windVelocity;
 
         return $this;
+    }
+
+    public function getFahrenheit(): ?string
+    {
+        return strval(intval($this->temperature) * 1.8 + 32);
     }
 
     // public function __toString()
